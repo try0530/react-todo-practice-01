@@ -9,12 +9,10 @@ function ToDoList() {
   }
 
   function addTask() {
-    // if (newTask.trim() !== "") {
-    //   setTasks((t) => [...t, newTask]);
-    //   setNewTask("");
-    // }
-    setTasks((t) => [...t, newTask]);
-    setNewTask("");
+    if (newTask.trim() !== "") {
+      setTasks((t) => [...t, newTask]); // add new task at the end of the tasks array
+      setNewTask("");
+    }
   }
 
   function deleteTask(index) {
@@ -36,7 +34,7 @@ function ToDoList() {
   }
 
   function moveTaskDown(index) {
-    if (index < tasks.length) {
+    if (index < tasks.length - 1) {
       const updatedTasks = [...tasks];
       [updatedTasks[index], updatedTasks[index + 1]] = [
         updatedTasks[index + 1],
@@ -52,12 +50,12 @@ function ToDoList() {
       <h1>To-Do-List</h1>
       <div>
         <input
-          type="test"
+          type="text"
           placeholder="Enter a task"
           value={newTask}
           onChange={handleInputChange}
         />
-        <button className="add-button" onclick={addTask}>
+        <button className="add-button" onClick={addTask}>
           Add
         </button>
       </div>
@@ -66,15 +64,23 @@ function ToDoList() {
         {tasks.map((task, index) => (
           <li key={index}>
             <span className="text">{task}</span>
-            <button className="delete-button" onClick={() => deleteTask(index)}>
-              Delete
-            </button>
-            <button className="move-button" onClick={() => moveTaskUp(index)}>
-              Up
-            </button>
-            <button className="move-button" onClick={() => moveTaskDown(index)}>
-              Down
-            </button>
+            <div className="buttons">
+              <button
+                className="delete-button"
+                onClick={() => deleteTask(index)}
+              >
+                Delete
+              </button>
+              <button className="move-button" onClick={() => moveTaskUp(index)}>
+                Up
+              </button>
+              <button
+                className="move-button"
+                onClick={() => moveTaskDown(index)}
+              >
+                Down
+              </button>
+            </div>
           </li>
         ))}
       </ol>
